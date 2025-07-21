@@ -18,39 +18,42 @@
   },
   "homepage": "https://github.com/amCtrld/bowlrms-ssb#readme",
   "description": "",
-  "devDependencies": {
-    "electron": "^37.2.3",
-    "electron-builder": "^26.0.12",
+  "dependencies": {
     "electron-updater": "^6.6.2"
   },
+  "devDependencies": {
+    "electron": "^37.2.3",
+    "electron-builder": "^26.0.12"
+  },
   "build": {
-  "appId": "com.bowlrms.desktop",
-  "productName": "BowlRMS",
-  "copyright": "Copyright © 2025",
-  "publish": [
-    {
-      "provider": "github"
+    "appId": "com.bowlrms.desktop",
+    "productName": "BowlRMS",
+    "copyright": "Copyright © 2025",
+    "publish": [
+      {
+        "provider": "github"
+      }
+    ],
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "assets/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "icon": "assets/bowlrms-icon.ico",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/bowlrms-icon.ico"
+    },
+    "mac": {
+      "target": []
+    },
+    "linux": {
+      "target": [],
+      "category": "Utility"
     }
-  ],
-  "files": [
-    "main.js",
-    "preload.js",
-    "renderer/**/*",
-    "assets/**/*"
-  ],
-  "directories": {
-    "buildResources": "assets"
-  },
-  "win": {
-    "target": "nsis"
-  }
-},
-  "linux": {
-    "target": "AppImage",
-    "category": "Utility"
-  },
-  "mac": {
-    "target": "dmg",
-    "category": "public.app-category.utilities"
   }
 }
