@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>BowlRMS Loading</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(135deg, #ff7d00 0%, #000000 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 400px;
+        height: 300px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Animated background particles */
+      .particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .particle {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .particle:nth-child(1) {
+        width: 80px;
+        height: 80px;
+        left: 10%;
+        animation-delay: 0s;
+      }
+
+      .particle:nth-child(2) {
+        width: 120px;
+        height: 120px;
+        left: 70%;
+        animation-delay: 2s;
+      }
+
+      .particle:nth-child(3) {
+        width: 60px;
+        height: 60px;
+        left: 90%;
+        animation-delay: 4s;
+      }
+
+      .particle:nth-child(4) {
+        width: 100px;
+        height: 100px;
+        left: 30%;
+        animation-delay: 1s;
+      }
+
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10%, 90% {
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-100px) rotate(180deg);
+        }
+      }
+
+      /* Main container */
+      .splash-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 16px;
+        padding: 25px 35px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        transform: translateY(50px);
+        opacity: 0;
+        position: relative;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        max-width: 340px;
+        max-height: 260px;
+      }
+
+      @keyframes slideUp {
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* Logo container with animated ring */
+      .logo-container {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 15px;
+      }
+
+      .logo-ring {
+        position: absolute;
+        top: -15px;
+        left: -15px;
+        width: calc(100% + 30px);
+        height: calc(100% + 30px);
+        border: 3px solid transparent;
+        border-top: 3px solid #ff7d00;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+        opacity: 0;
+        animation-delay: 0.5s;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        100% {
+          transform: rotate(360deg);
+          opacity: 1;
+        }
+      }
+
+      .logo {
+        width: 80px;
+        height: auto;
+        animation: logoFloat 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        transform: scale(0.8);
+        opacity: 0;
+        filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1));
+        transition: transform 0.3s ease;
+      }
+
+      @keyframes logoFloat {
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+      }
+
+      /* Title */
+      .title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 4px;
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        transform: translateY(20px);
+        opacity: 0;
+        background: linear-gradient(135deg, #ff7d00, #000000);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Subtitle */
+      .subtitle {
+        font-size: 12px;
+        color: #718096;
+        font-weight: 400;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      @keyframes fadeInUp {
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* Progress bar */
+      .progress-container {
+        width: 180px;
+        height: 4px;
+        background: #e2e8f0;
+        border-radius: 10px;
+        margin: 0 auto;
+        overflow: hidden;
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      .progress-bar {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, #ff7d00, #000000);
+        border-radius: 10px;
+        animation: loadProgress 3s ease-out 1s forwards;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .progress-bar::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        animation: shimmer 1.5s ease-in-out infinite;
+      }
+
+      @keyframes loadProgress {
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      /* Loading dots */
+      .loading-dots {
+        margin-top: 15px;
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      .dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background: #ff7d00;
+        border-radius: 50%;
+        margin: 0 3px;
+        animation: dotPulse 1.4s ease-in-out infinite both;
+      }
+
+      .dot:nth-child(1) { animation-delay: -0.32s; }
+      .dot:nth-child(2) { animation-delay: -0.16s; }
+      .dot:nth-child(3) { animation-delay: 0; }
+
+      @keyframes dotPulse {
+        0%, 80%, 100% {
+          transform: scale(0.8);
+          opacity: 0.5;
+        }
+        40% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+      }
+
+      /* Remove responsive design for fixed window size */
+
+      /* Additional glow effect */
+      .splash-container::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(135deg, #ff7d00, #000000, #ff7d00);
+        border-radius: 26px;
+        z-index: -1;
+        opacity: 0.3;
+        filter: blur(8px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+
+    <div class="splash-container">
+      <div class="logo-container">
+        <div class="logo-ring"></div>
+        <img class="logo" src="../assets/bowlLogo-3.png" alt="BowlRMS Logo" />
+      </div>
+      
+      <h1 class="title">BowlRMS</h1>
+      <p class="subtitle">Run smoother, serve smarter</p>
+      
+      <div class="progress-container">
+        <div class="progress-bar"></div>
+      </div>
+      
+      <div class="loading-dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <script>
+      // Optional: Add completion callback for Electron
+      setTimeout(() => {
+        if (window.electronAPI && window.electronAPI.splashComplete) {
+          window.electronAPI.splashComplete();
+        }
+      }, 4000);
+      
+      // Smooth fade out animation when ready
+      window.addEventListener('beforeunload', () => {
+        document.body.style.transition = 'opacity 0.3s ease';
+        document.body.style.opacity = '0';
+      });
+    </script>
+  </body>
+</html>

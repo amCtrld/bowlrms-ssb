@@ -1,0 +1,56 @@
+{
+  "name": "bowlrms-ssb",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amCtrld/bowlrms-ssb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amCtrld/bowlrms-ssb/issues"
+  },
+  "homepage": "https://github.com/amCtrld/bowlrms-ssb#readme",
+  "description": "",
+  "devDependencies": {
+    "electron": "^37.2.3",
+    "electron-builder": "^26.0.12",
+    "electron-updater": "^6.6.2"
+  },
+  "build": {
+  "appId": "com.bowlrms.desktop",
+  "productName": "BowlRMS",
+  "copyright": "Copyright © 2025",
+  "publish": [
+    {
+      "provider": "github"
+    }
+  ],
+  "files": [
+    "main.js",
+    "preload.js",
+    "renderer/**/*",
+    "assets/**/*"
+  ],
+  "directories": {
+    "buildResources": "assets"
+  },
+  "win": {
+    "target": "nsis"
+  }
+},
+  "linux": {
+    "target": "AppImage",
+    "category": "Utility"
+  },
+  "mac": {
+    "target": "dmg",
+    "category": "public.app-category.utilities"
+  }
+}
