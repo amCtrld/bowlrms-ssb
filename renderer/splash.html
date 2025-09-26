@@ -235,9 +235,10 @@
       }
 
       @keyframes loadProgress {
-        to {
-          width: 100%;
-        }
+        0% { width: 0%; }
+        33% { width: 33%; }
+        66% { width: 66%; }
+        100% { width: 100%; }
       }
 
       @keyframes shimmer {
@@ -282,6 +283,48 @@
         }
       }
 
+      /* Connection status */
+      .connection-status {
+        font-size: 13px;
+        color: #4a5568;
+        font-weight: 500;
+        margin-bottom: 18px;
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+        transform: translateY(20px);
+        opacity: 0;
+        min-height: 18px;
+      }
+
+      /* Retry section */
+      .retry-section {
+        margin-top: 15px;
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      .retry-button {
+        background: linear-gradient(135deg, #ff7d00, #e56b00);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(255, 125, 0, 0.3);
+      }
+
+      .retry-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 125, 0, 0.4);
+        background: linear-gradient(135deg, #e56b00, #cc5500);
+      }
+
+      .retry-button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(255, 125, 0, 0.3);
+      }
+
       /* Remove responsive design for fixed window size */
 
       /* Additional glow effect */
@@ -317,6 +360,8 @@
       <h1 class="title">BowlRMS</h1>
       <p class="subtitle">Run smoother, serve smarter</p>
       
+      <div class="connection-status">Starting application...</div>
+      
       <div class="progress-container">
         <div class="progress-bar"></div>
       </div>
@@ -326,9 +371,25 @@
         <span class="dot"></span>
         <span class="dot"></span>
       </div>
+
+      <div class="retry-section" style="display: none;">
+        <button class="retry-button" onclick="retryConnection()">Try Again</button>
+      </div>
     </div>
 
     <script>
+      // Retry connection function
+      function retryConnection() {
+        // Hide retry button and reset message
+        document.querySelector('.retry-section').style.display = 'none';
+        document.querySelector('.connection-status').textContent = 'Reconnecting...';
+        
+        // Notify main process to retry
+        if (window.electronAPI && window.electronAPI.retryConnection) {
+          window.electronAPI.retryConnection();
+        }
+      }
+
       // Optional: Add completion callback for Electron
       setTimeout(() => {
         if (window.electronAPI && window.electronAPI.splashComplete) {
