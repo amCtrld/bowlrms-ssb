@@ -120,13 +120,13 @@ function createWindow() {
     autoHideMenuBar: true,
   });
 
-  mainWindow.loadURL('https://beta.bowlrms.com/login'); // switch to bowlrms.com after bet
+  mainWindow.loadURL('https://bowlrms.com/login'); // switch to bowlrms.com after bet
 
   // Handle geolocation permission requests
   session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
     if (permission === 'geolocation') {
       // Check origin for added security
-      if (webContents.getURL().startsWith('https://beta.bowlrms.com')) {
+      if (webContents.getURL().startsWith('https://bowlrms.com')) {
         dialog
           .showMessageBox(mainWindow, {
             type: 'question',

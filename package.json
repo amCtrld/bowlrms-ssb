@@ -4,6 +4,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "clean": "rimraf dist",
+    "predist": "npm run clean",
     "build": "electron-builder",
     "dist": "electron-builder"
   },
@@ -24,7 +26,8 @@
   },
   "devDependencies": {
     "electron": "^37.2.3",
-    "electron-builder": "^26.0.12"
+    "electron-builder": "^26.0.12",
+    "rimraf": "^6.0.1"
   },
   "build": {
     "appId": "com.bowlrms.desktop",

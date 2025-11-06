@@ -9,5 +9,5 @@ document.getElementById('forward').addEventListener('click', () => {
 })
 
 document.getElementById('home').addEventListener('click', () => {
-  webview.loadURL('https://beta.bowlrms.com')
+  webview.loadURL('https://bowlrms.com')
 })
